@@ -4,11 +4,11 @@ version := "0.1"
 
 scalaVersion := "2.12.8"
 
-lazy val gitRepo = "git:https://github.com/scalahub/CommonUtil.git/#master"
+lazy val commonUtilGitRepo = "git:https://github.com/scalahub/CommonUtil.git/#master"
 
-lazy val g = RootProject(uri(gitRepo))
+lazy val commonUtil = RootProject(uri(commonUtilGitRepo))
 
-lazy val root = project in file(".") dependsOn g
+lazy val root = project in file(".") dependsOn commonUtil
 
 // https://mvnrepository.com/artifact/com.h2database/h2
 libraryDependencies += "com.h2database" % "h2" % "1.4.199" % Test
