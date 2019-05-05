@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="sbt: net.snaq:dbpool:7.0.1:jar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.ivy2/cache/net.snaq/dbpool/jars/dbpool-7.0.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
