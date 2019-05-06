@@ -1,10 +1,9 @@
-package test
+package org.sh.db
 
 import org.sh.db.BetterDB._
-import org.sh.db.{BetterDB, DBManager}
 import org.sh.db.core.DataStructures._
 import org.sh.db.core._
-import test.MainBasic._
+import MainBasic._
 
 object NestedNew 
 {

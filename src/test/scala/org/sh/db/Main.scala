@@ -1,10 +1,10 @@
 
-package test
+package org.sh.db
 
 import org.sh.db.config.TraitDBConfig
 import org.sh.db.core.DataStructures._
 import org.sh.db.core._
-import org.sh.db.{BetterDB, DBManager => DB}
+import org.sh.db.{DBManager => DB}
 import BetterDB._
 import BetterDB.Implicits._
 

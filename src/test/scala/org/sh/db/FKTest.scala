@@ -1,5 +1,5 @@
 
-package test
+package org.sh.db
 
 import org.sh.db.BetterDB._
 import org.sh.db.config.TraitDBConfig

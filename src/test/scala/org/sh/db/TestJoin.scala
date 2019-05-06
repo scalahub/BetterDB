@@ -1,5 +1,5 @@
 
-package test
+package org.sh.db
 
 import org.sh.db._
 import org.sh.db.core.DataStructures._

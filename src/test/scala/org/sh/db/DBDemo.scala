@@ -1,5 +1,5 @@
 
-package test
+package org.sh.db
 
 //import org.sh.db.{DBManager => DBMgr}
 import org.sh.db.config.TraitDBConfig

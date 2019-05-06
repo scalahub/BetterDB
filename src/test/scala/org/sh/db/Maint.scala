@@ -1,13 +1,9 @@
 
-package test
+package org.sh.db
 
-//import org.sh.db.core.Table
-//import org.sh.db.config.DBConfigFromFile
 import org.sh.db.config.TraitDBConfig
 import org.sh.db.core.DataStructures._
 import org.sh.db.core._
-import org.sh.db.BetterDB
-import org.sh.db.DBManager
 
 object Maint extends App{
   case class Person(uid:String, email:String, value:BigInt, scan:Array[Byte])
