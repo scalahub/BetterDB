@@ -16,7 +16,7 @@ Columns can be defined as:
 >      val sal = Col("SAL", LONG)
 
 Tables can be defined as:  
->      val users = Tab.withName("USERS").withCols(name, age, sal).withPriKeys(name, age) 
+>      val users = Tab.withName("USERS").withCols(name, age, sal).withPriKey(name, age) 
   
 Tables can be queried as:
 >      users.select(name, age).where(sal >= 2000).as(User(_))  
