@@ -4,7 +4,7 @@ version := "0.1"
 
 scalaVersion := "2.12.8"
 
-lazy val commonUtil = RootProject(uri("https://github.com/scalahub/CommonUtil.git/#master"))
+lazy val commonUtil = RootProject(uri("https://github.com/scalahub/CommonUtil.git"))
 // lazy val commonUtil = RootProject(uri("../CommonUtil"))
 
 lazy val root = project in file(".") dependsOn commonUtil
