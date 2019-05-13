@@ -34,6 +34,8 @@ object SameTableKey extends App {
 
 object DBDemo extends App
 {
+  Class.forName("org.h2.Driver")
+
   val userIDCol = Col("userID", STR(255))
   val ageCol = Col("age", INT)
   val salaryCol = Col("salary", LONG)

@@ -22,7 +22,8 @@ object FKTest {
     val usePool:Boolean = true // e.g. true (use db pool)
     val configSource = "test"
   }
-  
+  Class.forName("org.h2.Driver")
+
   def main(args:Array[String]):Unit = {}
   case class Person(uid:String, email:String, bal:BigInt)
   def arrayToPerson(a:Array[Any]) = Person(a(0).as[String], a(1).as[String], a(2).as[BigInt])

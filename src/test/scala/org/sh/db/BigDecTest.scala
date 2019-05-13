@@ -60,5 +60,5 @@ object BigDecTest {
 
   } catch {
     case t:Throwable => t.printStackTrace
-  } finally System.exit(1)
+  } finally System.exit(0)
 }
