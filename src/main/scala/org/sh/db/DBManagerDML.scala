@@ -284,11 +284,11 @@ abstract class DBManagerDML(table:Table, dbConfig:TraitDBConfig) {
     usingOpt(optConn, connection){conn => // WHAT IF INCREMENTS CONTAIN COMPOSITE COLS???
       lock.synchronized { // is lock necessary???
         conn.setAutoCommit(false) // transaction start
+        val incrCols = increments.map(_.col)
         try {
-          val incrCols = increments.map(_.col)
           val aftersAndBefores = selectCols(wheres, incrCols, incrementItWithResult(_, increments.map(_.data)))(Array(), 0, 0, Some(conn))
           val resCols = aftersAndBefores.size match {
-            case 0 => throw new DBException("increment: no rows matched in table ["+table+"] for cols ["+incrCols.map(_.name).reduceLeft(_+","+_)+"]")
+            case 0 => throw new DBException(s"Zero rows matched in table [$table] while incrementing cols [${incrCols.map(_.name).reduceLeft(_+","+_)}]")
             case 1 => 
               val afterAndBefore = aftersAndBefores(0)
               val (afters, befores) = afterAndBefore.unzip
@@ -305,7 +305,7 @@ abstract class DBManagerDML(table:Table, dbConfig:TraitDBConfig) {
           case e: Exception => 
             e.printStackTrace
             conn.rollback 
-            throw new DBException("Increment aborted. Table ["+table+"]. Error: "+e.getMessage)
+            throw new DBException(s"Message [${e.getMessage}] in table [$table] while incrementing cols [${incrCols.map(_.name).reduceLeft(_+","+_)}]")
         } finally {
           conn.setAutoCommit(true)
         }
