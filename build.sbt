@@ -4,10 +4,10 @@ version := "0.1"
 
 scalaVersion := "2.12.8"
 
-lazy val commonUtil = RootProject(uri("https://github.com/scalahub/CommonUtil.git"))
-// lazy val commonUtil = RootProject(uri("../CommonUtil"))
+lazy val ScalaUtils = RootProject(uri("https://github.com/scalahub/ScalaUtils.git"))
+// lazy val ScalaUtils = RootProject(uri("../ScalaUtils"))
 
-lazy val root = project in file(".") dependsOn commonUtil
+lazy val root = project in file(".") dependsOn ScalaUtils
 
 // https://mvnrepository.com/artifact/net.snaq/dbpool
 libraryDependencies += "net.snaq" % "dbpool" % "7.0.1"
