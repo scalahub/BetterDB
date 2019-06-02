@@ -5,9 +5,12 @@ import org.h2.tools.Server
 import java.io.File
 import java.util.Calendar
 
+import org.sh.utils.common.file.TraitFilePropertyReader
 
-object Util {
-  lazy val home = System.getProperty("user.home")
+
+object Util extends TraitFilePropertyReader{
+  val propertyFile = "h2.properties"
+  lazy val home = read("h2home", System.getProperty("user.home"))
   lazy val sepr = System.getProperty("file.separator")
   def h2dbDir(db:String) = home+sepr+".h2_"+db
   def getH2DBString(dbms:String, db:String) = dbms match {
