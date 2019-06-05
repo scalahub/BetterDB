@@ -1,5 +1,6 @@
-[![Build Status](https://travis-ci.org/scalahub/BetterDB.svg?branch=master)](https://travis-ci.org/scalahub/BetterDB)
 # BetterDB 
+
+[![Build Status](https://travis-ci.org/scalahub/BetterDB.svg?branch=master)](https://travis-ci.org/scalahub/BetterDB)
 
 BetterDB is a Scala library for connecting to and querying relational databases. It is created on top of JDBC.
 
