@@ -1,5 +1,7 @@
 package org.sh.db.core
 
+import java.util.Base64
+
 import org.sh.utils.common.json.JSONUtil
 import org.sh.db._
 import org.sh.db.core.Util._
@@ -65,16 +67,15 @@ package object DataStructures{
     lazy val nestedColAlias = aggregate.alias
     def count = db.aggregateGroupLong(Array(aggregate), wheres, groupByIntervals, havings).size
   }
-  
+
   def hash(s:String) = {
-    val base64 = new sun.misc.BASE64Encoder
+    val base64 = Base64.getEncoder
     val sha = java.security.MessageDigest.getInstance("SHA-1")
-    try base64.encode(
+    try base64.encodeToString(
       sha.digest(
         s.getBytes
       )
-    ).filter(
-      x => 
+    ).filter(x =>
       x.isLetter
     ).take(10)
     catch {
