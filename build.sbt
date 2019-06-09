@@ -27,7 +27,7 @@ initialize := {
       def apply(current: VersionNumber, required: VersionNumber) = isCompatible(current, required)
     }
     val _ = initialize.value // run the previous initialization
-    val required = VersionNumber("9") // Java >= 9 is needed
+    val required = VersionNumber("1.8") 
     val curr = VersionNumber(sys.props("java.specification.version"))
     assert(CompatibleJavaVersion(curr, required), s"Java $required or above required. Currently $curr")
 }
