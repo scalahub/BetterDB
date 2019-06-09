@@ -4,8 +4,8 @@ import org.sh.db.config._
 import org.sh.db.core.Util._
 import org.sh.db.core._
 import org.sh.db.core.DataStructures._
-import org.sh.utils.common.Util._
-import org.sh.utils.common.json.JSONUtil.JsonFormatted
+import org.sh.utils.Util._
+import org.sh.utils.json.JSONUtil.JsonFormatted
 import java.io.File
 import java.sql.ResultSet
 import java.sql.{ResultSet => RS}

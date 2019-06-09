@@ -5,7 +5,7 @@ import org.h2.tools.Server
 import java.io.File
 import java.util.Calendar
 
-import org.sh.utils.common.file.TraitFilePropertyReader
+import org.sh.utils.file.TraitFilePropertyReader
 
 
 object Util extends TraitFilePropertyReader{

@@ -1,10 +1,10 @@
 
 package org.sh.db
 
-import org.sh.utils.common.file.prop.EncryptorDecryptor
+import org.sh.utils.file.prop.EncryptorDecryptor
 import java.io._
 import org.sh.db.core.DataStructures._
-import org.sh.utils.common.Util._
+import org.sh.utils.Util._
 import org.h2.tools.Csv
 
 object DBManagerMgmt {
@@ -41,7 +41,7 @@ object DBManagerMgmt {
     val file = randomAlphanumericString(20)
     src.exportAllToCSV(file)
     dest.importFromCSV(file)
-    val deleted = org.sh.utils.common.file.Util.deleteFile(file)
+    val deleted = org.sh.utils.file.Util.deleteFile(file)
     val info = if (deleted) "File deleted." else "Unable to delete file."
     "Done! Copied via file: "+file+". "+info
   }
@@ -50,7 +50,7 @@ object DBManagerMgmt {
     val secret = randomAlphanumericString(100)
     src.exportEncrypted(file, secret)
     dest.importEncrypted(file, secret)
-    val deleted = org.sh.utils.common.file.Util.deleteFile(file)
+    val deleted = org.sh.utils.file.Util.deleteFile(file)
     val info = if (deleted) "File deleted." else "Unable to delete file."
     "Done! Copied via file: "+file+". "+info
   }

@@ -39,7 +39,7 @@ object Maint extends App{
     val table = Table("blobsNewTable", Array(uid, email, value, scan), Array(uid))
     val dbmOld = new DBManager(tableOld)(NewConfig)
     val dbmNew = new DBManager(table)(NewConfig)
-    import org.sh.utils.common.Util._
+    import org.sh.utils.Util._
     dbmOld.insertArray(Array("hey"+randomAlphanumericString(10), "hello", BigInt(9223372036854775806L), Array[Byte](33, 43)))
     println (" dmbOld : read following ")
     dbmOld.select(uid, email, value, scan).as(arrayToPerson) foreach println
@@ -47,7 +47,7 @@ object Maint extends App{
     println (" dmbNew : read following before import")
     dbmNew.select(uid, email, value, scan).as(arrayToPerson) foreach println
     val testFile = "test12345"+randomAlphanumericString(5)+".txt"
-    org.sh.utils.common.file.Util.deleteFile(testFile)
+    org.sh.utils.file.Util.deleteFile(testFile)
     dbmOld.exportToCSV(testFile, Array())
     //    dbmNew.updatePassword("xyzw")
     dbmNew.importFromCSV(testFile)

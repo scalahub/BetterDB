@@ -1,8 +1,8 @@
 package org.sh.db.core
 
 import DataStructures._
-import org.sh.utils.common.file.TraitFilePropertyReader
-import org.sh.utils.common.json.JSONUtil.JsonFormatted
+import org.sh.utils.file.TraitFilePropertyReader
+import org.sh.utils.json.JSONUtil.JsonFormatted
 import java.sql.SQLException
 import java.sql.Timestamp
 import java.util.Date
@@ -140,7 +140,7 @@ object Util extends TraitFilePropertyReader {
     val priKeyCols = cols.filter(col => keys.contains(col.name))
     (cols.reverse, priKeyCols)
   }
-  import org.sh.utils.common.Util._
+  import org.sh.utils.Util._
 
   def getColList(rs:ResultSet) = { // used for validating table schema
     val rsmd = rs.getMetaData

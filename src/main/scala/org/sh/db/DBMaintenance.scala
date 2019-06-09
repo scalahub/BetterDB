@@ -1,8 +1,8 @@
 package org.sh.db
 
-import org.sh.utils.common.file.TraitFilePropertyReader
-import org.sh.utils.common.json.JSONUtil
-import org.sh.utils.common.Util._
+import org.sh.utils.file.TraitFilePropertyReader
+import org.sh.utils.json.JSONUtil
+import org.sh.utils.Util._
 import java.io.File
 import org.sh.db.config.DBConfigFromFile
 import org.sh.db.core.DataStructures._
@@ -45,7 +45,7 @@ case class DBGroup(index:Int, groupedBy:GroupedBy, dbMgrs:Array[DBManager]) exte
     configsToUpdate.foreach{c =>
       val cProps = c.asInstanceOf[DBConfigFromFile]
       cProps.write("dbpass", newPassword, "changed_by_DBMaintenance_tool", true)
-      if (org.sh.utils.common.Util.debug) println("writing to "+c.configSource)
+      if (org.sh.utils.Util.debug) println("writing to "+c.configSource)
     }
     configsToUpdate.map(_.configSource).toArray
   }
@@ -82,7 +82,7 @@ class DBMaintenance(dbu:DBMaintenanceUtil) { // objects will be accessed to load
     getDBNameGroupsDetails.flatMap{
       case DBGroup(index:Int, GroupedBy("localhost", "h2", db), dbMgrs:Array[DBManager]) => 
         dbMgrs.map{dbm =>
-          val fileName = dbm.tableName+org.sh.utils.common.Util.randomAlphanumericString(10)
+          val fileName = dbm.tableName+org.sh.utils.Util.randomAlphanumericString(10)
           dbm.exportAllToCSV(fileName)
           dbm.tableName + " exported to "+fileName
         }
@@ -145,7 +145,7 @@ class DBMaintenance(dbu:DBMaintenanceUtil) { // objects will be accessed to load
     val time = getTime
     getDBNameGroupsDetails.map{
       case DBGroup(index:Int, GroupedBy("localhost", "h2", db), dbMgrs:Array[DBManager]) => 
-        val randomTime = org.sh.utils.common.Util.rand.abs % OneHour
+        val randomTime = org.sh.utils.Util.rand.abs % OneHour
         // don't do immediately, do after some time
         doOnce(
           { // autoh2_<date time>_<name>_<epoch>

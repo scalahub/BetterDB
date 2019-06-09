@@ -1,6 +1,6 @@
 package org.sh.db.config
 
-import org.sh.utils.common.file.TraitFilePropertyReader
+import org.sh.utils.file.TraitFilePropertyReader
 
 object DefaultDBConfigFromFile extends DBConfigFromFile("db.properties")
 

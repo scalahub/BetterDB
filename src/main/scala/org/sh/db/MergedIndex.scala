@@ -1,7 +1,7 @@
 package org.sh.db
 
 import org.sh.db.core.DataStructures._
-import org.sh.utils.common.Util._
+import org.sh.utils.Util._
 
 import org.sh.db.BetterDB._
 

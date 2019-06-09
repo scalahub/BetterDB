@@ -4,8 +4,8 @@ package org.sh.db
 //import org.sh.db.{DBManager => DBMgr}
 import org.sh.db.config.TraitDBConfig
 import org.sh.db.core.DataStructures.{VARCHAR => STR, _}
-import org.sh.utils.common.encoding.Hex
-import org.sh.utils.common.json.JSONUtil.JsonFormatted
+import org.sh.utils.encoding.Hex
+import org.sh.utils.json.JSONUtil.JsonFormatted
 
 object MyDBConfig extends TraitDBConfig {
   val dbname:String = "demoDB"

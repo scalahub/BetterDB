@@ -4,7 +4,7 @@ import org.sh.db.config.TraitDBConfig
 import org.sh.db.core.DataStructures._
 import org.sh.db.core._
 import org.sh.db.core.Util._
-import org.sh.utils.common.Util._
+import org.sh.utils.Util._
 import java.sql.Connection
 import java.sql.PreparedStatement
 import java.sql.ResultSet

@@ -2,7 +2,7 @@ package org.sh.db.core
 
 import java.util.Base64
 
-import org.sh.utils.common.json.JSONUtil
+import org.sh.utils.json.JSONUtil
 import org.sh.db._
 import org.sh.db.core.Util._
 
@@ -95,7 +95,7 @@ package object DataStructures{
     val newData = data.toArray
     if (timeKeyIndex >= 0 && data(timeKeyIndex).isInstanceOf[Long]) {
       val time = data(timeKeyIndex).asInstanceOf[Long]
-      newData(timeKeyIndex) = org.sh.utils.common.Util.toDateString(time)+"("+time+")"
+      newData(timeKeyIndex) = org.sh.utils.Util.toDateString(time)+"("+time+")"
       
     }
     val keys = names 

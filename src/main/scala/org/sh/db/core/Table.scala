@@ -3,7 +3,7 @@ package org.sh.db.core
 import DataStructures._
 import Util._
 import org.sh.db.core.FKDataStructures._
-import org.sh.utils.common.Util._
+import org.sh.utils.Util._
 
 case class Table(tableName:String, tableCols:Cols, priKey:Cols) {
   import Table._

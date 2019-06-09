@@ -3,7 +3,7 @@ package org.sh.db
 import org.sh.db.BetterDB._
 import org.sh.db.config.TraitDBConfig
 import org.sh.db.core.DataStructures._
-import org.sh.utils.common.Util.randomAlphanumericString
+import org.sh.utils.Util.randomAlphanumericString
 
 object BigDecTest {
   object MyDBConfig extends TraitDBConfig {
