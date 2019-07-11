@@ -3,7 +3,7 @@ package org.sh.db
 import org.sh.db.core.DataStructures._
 import org.sh.utils.Util._
 
-import org.sh.db.BetterDB._
+import org.sh.db.ScalaDB._
 
 /**
  * purpose of this code:

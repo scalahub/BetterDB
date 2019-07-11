@@ -28,7 +28,7 @@ case class Aggregate(col:Col, aggr:Aggr) {
         // The data will be read from the groupByInterval (special case of group-by-interval with interval 0)
       case Top(_) => Nil // top should not map to a real sql query. Instead a groupBy clause should have been used with that group-by-interval
         // we will then read the result of Top(_) using the alias of the column used for the group-by-interval
-        // Example: (Refer to BetterDB syntax)
+        // Example: (Refer to ScalaDB syntax)
         //   tab.aggregate(age.max).groupByInterval(sal \ 100) 
         // will be mapped to
         //   SELECT MAX(age) as foo, 100*round(sal/100, 0) as bar from tab GROUP BY bar

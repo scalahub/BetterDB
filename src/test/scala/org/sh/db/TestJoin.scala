@@ -4,7 +4,7 @@ package org.sh.db
 import org.sh.db._
 import org.sh.db.core.DataStructures._
 import org.sh.db.core._
-import BetterDB._
+import ScalaDB._
 
 object TestJoin extends App {
   import Main._

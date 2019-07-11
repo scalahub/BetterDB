@@ -17,7 +17,7 @@ object MyDBConfig extends TraitDBConfig {
   val usePool:Boolean = true // e.g. true (use db pool)
   val configSource = "test"
 }
-import org.sh.db.BetterDB._
+import org.sh.db.ScalaDB._
 object SameTableKey extends App {
   val key1 = Col("ID1", STR(255))
   val key2 = Col("ID2", STR(255))

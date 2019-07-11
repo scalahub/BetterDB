@@ -29,7 +29,7 @@ object DBManagerMgmt {
   /**
    * this is inefficient. It inserts one row at a time
    */
-  import BetterDB._
+  import ScalaDB._
   @deprecated def copyFromTo(src:DBManager, dest:DBManager) = {
     ensureCopyable(src, dest)
     src.selectStar.asList foreach dest.insert

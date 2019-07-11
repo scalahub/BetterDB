@@ -1,12 +1,12 @@
-# BetterDB 
+# ScalaDB 
 
-[![Build Status](https://travis-ci.org/scalahub/BetterDB.svg?branch=master)](https://travis-ci.org/scalahub/BetterDB)
+[![Build Status](https://travis-ci.org/scalahub/ScalaDB.svg?branch=master)](https://travis-ci.org/scalahub/ScalaDB)
 
-BetterDB is a Scala library for connecting to and querying relational databases. It is created on top of JDBC.
+ScalaDB is a Scala library for connecting to and querying relational databases. It is created on top of JDBC.
 
 ## Supported Databases
 
-BetterDB is extensively tested on H2. It should work with MySQL and PostGreSQL as well, although not heavily tested on those databases.
+ScalaDB is extensively tested on H2. It should work with MySQL and PostGreSQL as well, although not heavily tested on those databases.
 
 ## Examples
 
@@ -26,5 +26,5 @@ and
 
 >      users.aggregate(age.avg).where(sal >= 200).asLong 
   
-More examples [here](https://github.com/scalahub/BetterDB/tree/master/src/test/scala/org/sh/db).
+More examples [here](https://github.com/scalahub/ScalaDB/tree/master/src/test/scala/org/sh/db).
 

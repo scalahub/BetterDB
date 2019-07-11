@@ -5,8 +5,8 @@ import org.sh.db.config.TraitDBConfig
 import org.sh.db.core.DataStructures._
 import org.sh.db.core._
 import org.sh.db.{DBManager => DB}
-import BetterDB._
-import BetterDB.Implicits._
+import ScalaDB._
+import ScalaDB.Implicits._
 
 object MyDBConfig2 extends TraitDBConfig {
   val dbname:String = "dbtest2"

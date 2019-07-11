@@ -1,6 +1,6 @@
 package org.sh.db.core.DataStructures
 
-import org.sh.db.BetterDB.Sel
+import org.sh.db.ScalaDB.Sel
 import org.sh.db.DBManager
 import org.sh.db.core.Table
 import org.sh.db.core.Util

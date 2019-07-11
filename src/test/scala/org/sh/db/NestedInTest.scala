@@ -3,7 +3,7 @@ package org.sh.db
 
 import org.sh.db.core.Util
 import org.sh.db.{DBManager => DBM}
-import org.sh.db.BetterDB._
+import org.sh.db.ScalaDB._
 import org.sh.db.core.DataStructures._
 
 object Test extends App{

@@ -31,7 +31,7 @@ object Maint extends App{
     val configSource = "test"
   }
   foo
-  import BetterDB._
+  import ScalaDB._
   def foo = try {
     val (uid, email, value, scan) = (Col("uid", VARCHAR(255)), Col("email", VARCHAR(255)), Col("value", UScalaBIGINT(100)), 
                                      Col("scan", BLOB))

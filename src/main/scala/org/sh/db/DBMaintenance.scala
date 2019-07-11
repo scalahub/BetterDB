@@ -7,7 +7,7 @@ import java.io.File
 import org.sh.db.config.DBConfigFromFile
 import org.sh.db.core.DataStructures._
 import org.sh.db.core.Util._
-import org.sh.db.BetterDB._
+import org.sh.db.ScalaDB._
 import org.getopt.util.hash.MurmurHash
 import scala.collection.JavaConversions._
 

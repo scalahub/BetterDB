@@ -12,7 +12,7 @@ import org.sh.db.core.FKDataStructures.Restrict
 import org.sh.db.core.Table
 import org.sh.db.{DBManager => DBM}
 
-object BetterDB {
+object ScalaDB {
   object Implicits {
     implicit def strToCol(a:String) = constCol(a)
     implicit def intToCol(a:Int) = constCol(a)
@@ -69,11 +69,11 @@ object BetterDB {
     def into(otherDB:DBM) = 
       db.selectInto(otherDB, origWheres, origCols)(origOrderings, origMax,origOffset)
     
-    def into(otherDB:BetterDB) = 
+    def into(otherDB:ScalaDB) = 
       db.selectInto(otherDB.db, origWheres, origCols)(origOrderings, origMax,origOffset)
     
     @deprecated("don't use nested as the queries can take a long time", "2 June 2016") def nested = { // possible problem if origCol has tableSpecificInfo
-      if (origCols.size != 1) throw DBException("BetterDB: selected cols size must be 1 in nested select")
+      if (origCols.size != 1) throw DBException("ScalaDB: selected cols size must be 1 in nested select")
       val table = db.getTable
       
       val ords = origOrderings.map(_.to(table))
@@ -112,7 +112,7 @@ object BetterDB {
     def groupBy(cols:Cols) = groupByInterval(cols.map(_ \ 0))
     def groupBy(cols:Col*):Grp = groupBy(cols.toArray)
     def nested = { // possible problem if origCol has tableSpecificInfo
-      if (origAggrs.size != 1) throw DBException("BetterDB: selected aggregates size must be 1 in nested aggregate")
+      if (origAggrs.size != 1) throw DBException("ScalaDB: selected aggregates size must be 1 in nested aggregate")
       NestedAggregate(db, origAggrs(0).to(db.getTable), origWheres, Array(), origHavings)
     }
   }
@@ -151,7 +151,7 @@ object BetterDB {
     def groupBy(cols:Cols) = groupByInterval(cols.map(_ \ 0))
     def groupBy(cols:Col*):Grp = groupBy(cols.toArray)
     def nested = { // possible problem if origCol has tableSpecificInfo
-      if (origAggrs.size != 1) throw DBException("BetterDB: selected aggregates size must be 1 in nested aggregate")
+      if (origAggrs.size != 1) throw DBException("ScalaDB: selected aggregates size must be 1 in nested aggregate")
       NestedAggregate(db, origAggrs(0).to(db.getTable), origWheres, origGrps, origHavings)
     }
   }
@@ -184,9 +184,9 @@ object BetterDB {
     def where(wheres:Wheres) = Upd(db, origUpds, origWheres ++ (wheres.filterNot(origWheres.contains))).execute
     def where(wheres:Where*):Int = where(wheres.toArray)
   }
-  class BetterDB(val db:DBM) {
+  class ScalaDB(val db:DBM) {
     @deprecated("Index reduces performance", "21 Nov 2017")
-    def indexedBy(cols:Col*):BetterDB = indexedBy(cols.toArray)
+    def indexedBy(cols:Col*):ScalaDB = indexedBy(cols.toArray)
     @deprecated("Index reduces performance", "21 Nov 2017")
     def indexedBy(cols:Array[Col]) =  {
       db.indexBy(cols: _*)
@@ -233,7 +233,7 @@ object BetterDB {
     if (optPriKeyTable.isDefined && optOnDelete.isDefined && optOnUpdate.isDefined)
       doOperation(Link(cols, optPriKeyTable.get, FkRule(optOnDelete.get, optOnUpdate.get)))
   }
-  implicit def dbToDB(s: DBM) = new BetterDB(s)
+  implicit def dbToDB(s: DBM) = new ScalaDB(s)
   implicit def selToNested(s:Sel[_]) = s.nested
 
 }
