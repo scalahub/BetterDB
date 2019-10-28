@@ -71,6 +71,9 @@ object FKTest {
     System.exit(1)
   }
   def assertException[T <: Exception, S](e:Class[T])(f: => S) = 
-    try {f; assert(false) } catch { case a:Any => assert(a.getClass == e) }
+    try {f; assert(false) } catch { 
+      case a:Any => 
+        assert(a.getClass == e, s"Found ${a.getClass}. Expected: $e") 
+    }
 
 }

@@ -8,7 +8,7 @@ import org.sh.db.config.TraitDBConfig
 import org.sh.db.core.DataStructures._
 import org.sh.utils.Util._
 
-abstract class DBManagerDDL(table:Table, dbConfig:TraitDBConfig) extends DBManagerDML(table:Table, dbConfig:TraitDBConfig) {  
+private [db] abstract class DBManagerDDL(table:Table, dbConfig:TraitDBConfig) extends DBManagerDML(table:Table, dbConfig:TraitDBConfig) {  
   import table._
   // FOREIGN KEY MANAGEMENT
   def removeIndexIfExists(cols:Col*) = {

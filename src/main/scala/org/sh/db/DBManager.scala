@@ -59,7 +59,7 @@ case class ExistingDB(tableName:String)(implicit val dbConfig:TraitDBConfig = De
 }
 
 import Table._
-object DBManager {
+private [db] object DBManager {
   
   val noCols = Array[Col]()  
   
