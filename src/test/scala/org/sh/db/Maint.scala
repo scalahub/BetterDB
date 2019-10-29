@@ -33,12 +33,10 @@ object Maint extends App{
   foo
   import ScalaDB._
   def foo = try {
-    val (uid, email, value, scan) = (Col("uid", VARCHAR(255)), Col("email", VARCHAR(255)), Col("value", UScalaBIGINT(100)), 
+    val (uid, email, value, scan) = (Col("uid", VARCHAR(255)), Col("email", VARCHAR(255)), Col("value", new UBIGDEC(100)),
                                      Col("scan", BLOB))
-    val tableOld = Table("blobsOldTable", Array(uid, email, value, scan), Array(uid))
-    val table = Table("blobsNewTable", Array(uid, email, value, scan), Array(uid))
-    val dbmOld = new DBManager(tableOld)(NewConfig)
-    val dbmNew = new DBManager(table)(NewConfig)
+    val dbmOld = Tab.withName("blobsOldTable").withConfig(NewConfig).withCols(uid, email, value, scan).withPriKey(uid)
+    val dbmNew = Tab.withName("blobsNewTable").withConfig(NewConfig).withCols(uid, email, value, scan).withPriKey(uid)
     import org.sh.utils.Util._
     dbmOld.insertArray(Array("hey"+randomAlphanumericString(10), "hello", BigInt(9223372036854775806L), Array[Byte](33, 43)))
     println (" dmbOld : read following ")

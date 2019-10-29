@@ -42,7 +42,7 @@ case class Table(tableName:String, tableCols:Cols, priKey:Cols) {
   
   private def checkString = tableCols.filter(
     _.colType match {
-      case ULONG(_) | UINT(_) | UBIGDEC(_, _) | UScalaBIGINT(_) => true
+      case ULONG(_) | UINT(_) | UBIGDEC(_, _) => true
       case _ => false
     }
   ) match {

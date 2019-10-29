@@ -19,7 +19,7 @@ object NestedNew
       val db1 = DBManager("foo1")(name, age)()
       val db2 = DBManager("foo2")(age, name)()
       db1.deleteAll
-      db.aggregate(name, age.sum).groupBy(name).into(db1)
+      //db.aggregate(name, age.sum).groupBy(name).into(db1)
       db.aggregate(age.sum, name).groupBy(name).into(db2)
     } catch {
       case t:Throwable => t.printStackTrace

@@ -56,7 +56,6 @@ object Util extends TraitFilePropertyReader {
     d match{
       case TIMESTAMP => data.toLong
       case VARBINARY(_) | BLOB => Base64.decode(data)
-      case ScalaBIGINT(_) | UScalaBIGINT(_) => BigInt(data) 
       case BIGDEC(_, _) | UBIGDEC(_, _) => BigDecimal(data)
       case VARCHAR(_)|VARCHARANY => data
       case INT | UINT(_) => data.toInt
@@ -81,8 +80,6 @@ object Util extends TraitFilePropertyReader {
    * This is used for generating SQL statements.
    */
   def colTypeString(t:DataType)(isPostGreSQL:Boolean) = t match {
-    case ScalaBIGINT(size) => "VARCHAR("+size+")"
-    case UScalaBIGINT(size) => "VARCHAR("+size+")"
     case VARCHAR(size) => "VARCHAR("+size+")"
     case VARCHARANY => "VARCHAR"
     case VARBINARY(size) => "VARBINARY("+size+")"
@@ -187,9 +184,6 @@ object Util extends TraitFilePropertyReader {
             case 0 => false 
             case _ => true
           }          
-        case ScalaBIGINT(size) => s => BigInt(rs.getString(s)) // scala bigint stored as varchar // keep size to 255 usually
-        case UScalaBIGINT(size) => s => BigInt(rs.getString(s)) // scala bigint stored as varchar // keep size to 255 usually
-          
         case BIGDEC(size, scale) => s => BigDecimal(rs.getBigDecimal(s))
         case UBIGDEC(size, scale) => s => BigDecimal(rs.getBigDecimal(s))
         case VARCHAR(_)|VARCHARANY => rs.getString
@@ -267,17 +261,7 @@ object Util extends TraitFilePropertyReader {
           case x:String => st.setString(ctr, x) 
           case any => anyException(any, classOf[String])
         }
-      case ScalaBIGINT(s) => data match { 
-          case x: BigInt => 
-            val str = x.toString // no need to format. Negative numbers do not allow lexicographic ordering.
-            // only UScalaBigInt allows ordering, which is formated later
-            if (str.size > s) throw new SQLException("scala bigint size > "+s+": "+x.toString.take(10)+"...")
-            st.setString(ctr, str) 
-          case x: Long => set(ctr, st, BigInt(x), dataType)
-          case x: Int => set(ctr, st, BigInt(x), dataType)
-          case any => anyException(any, classOf[BigInt])
-        }
-      case BIGDEC(s, p) => data match { 
+      case BIGDEC(s, p) => data match {
           case x: BigDecimal => 
             if (x.scale > s) throw new SQLException("scala bigdec size > "+s+": "+x.toString.take(10)+"...") 
             st.setBigDecimal(ctr, x.bigDecimal)
@@ -298,18 +282,7 @@ object Util extends TraitFilePropertyReader {
           case x: String => st.setString(ctr, x) 
           case any => anyException(any, classOf[Long])
         }
-      case UScalaBIGINT(s) => data match { 
-          case x: BigInt => // ignoreUnsigned is used to avoid errors when data is in where clause. See top of method definition
-            if (x < 0) signException(x, dataType)
-            val str = ("%0"+s+"d").format(x)
-            if (str.size > s) rangeException(s, x.toString.take(10)+"...", dataType)
-            //if (str.size > s) throw new SQLException("scala bigint size > "+s+": "+x.toString.take(10)+"...")
-            st.setString(ctr, str) 
-          case x: Long => set(ctr, st, BigInt(x), dataType)
-          case x: Int => set(ctr, st, BigInt(x), dataType)
-          case any => anyException(any, classOf[BigInt])
-        }
-      case UBIGDEC(s, p) => data match { 
+      case UBIGDEC(s, p) => data match {
           case x: BigDecimal => // ignoreUnsigned is used to avoid errors when data is in where clause. See top of method definition
             if (x < 0) signException(x, dataType)
             if (x.scale > s) rangeException(s, x.toString.take(10)+"...", dataType)
@@ -369,42 +342,6 @@ object Util extends TraitFilePropertyReader {
   }
   def getSQLTimeStamp:java.sql.Timestamp = { new java.sql.Timestamp(new java.util.Date().getTime) }
   
-  
-  // following is not used in CommonDB, only in SecureDB. why?
-  def isTypeMatch(data:Any, colType:DataType) = (data, colType) match { 
-    // only checks type matching, doesnt check crypto compatibility (e.g., salts)
-    //    cases to handle: cc = composite col; c = ordinary col
-    // LHS    RHS
-    // c      d
-    // cc     c
-    //        cc
-    // -----------------
-    // c      d       OK
-    // c      c       OK
-    // c      cc      OK
-    // cc     d       OK
-    // cc     c       OK
-    // cc     cc      OK
-    case (b:Boolean, BOOL) => true
-    case (i:Int, INT|UINT(_)) => true
-    case (l:Long, LONG|ULONG(_)) => true
-    case (i:Int, LONG|ULONG(_)) => true
-    case (i:java.lang.Integer, LONG|ULONG(_)) => true
-    case (i:java.lang.Integer, INT|UINT(_)) => true
-    case (i:Int, ScalaBIGINT(_)|UScalaBIGINT(_)) => true
-    case (l:Long, ScalaBIGINT(_)|UScalaBIGINT(_)) => true
-    case (b:BigInt, ScalaBIGINT(_)|UScalaBIGINT(_)) => true
-    case (s:String, VARCHAR(_)|VARCHARANY) => true
-    case (a:Array[Byte], BLOB|VARBINARY(_)) => true
-    case (t:Timestamp, TIMESTAMP) => true
-    case (Col(_, LONG|ULONG(_)|INT|UINT(_), _), CompositeCol(_, _, _)) => true  // cc   c
-    case (c:Number, CompositeCol(_, _, _)) => true                              // cc   d
-    case (c:Col, t) if c.colType == t => true                                   // cc   cc
-                                                                                // c    c
-    case (c:Col, LONG|ULONG(_)|INT|UINT(_)) if c.isComposite => true            // c    cc
-    //case (c:Col, ULONGCOMPOSITE) => true            // ????
-    case _ => false
-  }
   def canDoComparison(col:Col, op:Op) = (col.colType, op) match {
     case (colType, _) if colType.isSortable => true
     case (_, From | In | NotIn | IsNull | IsNotNull) => true
