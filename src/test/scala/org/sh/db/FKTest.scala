@@ -68,7 +68,7 @@ object FKTest {
     case e:Throwable => 
       e.printStackTrace
   } finally { 
-    System.exit(1)
+    System.exit(0)
   }
   def assertException[T <: Exception, S](e:Class[T])(f: => S) = 
     try {f; assert(false) } catch { case a:Any => assert(a.getClass == e) }
