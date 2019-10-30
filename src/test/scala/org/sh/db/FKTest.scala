@@ -27,8 +27,10 @@ object FKTest {
   def main(args:Array[String]):Unit = {}
   case class Person(uid:String, email:String, bal:BigInt)
   def arrayToPerson(a:Array[Any]) = Person(a(0).as[String], a(1).as[String], a(2).as[BigInt])
+
+
   try {
-    val (userid, email, bal) = (Col("userid", VARCHAR(255)), Col("email", VARCHAR(20)), Col("value", UScalaBIGINT(100))) 
+    val (userid, email, bal) = (Col("userid", VARCHAR(255)), Col("email", VARCHAR(20)), Col("value", new BIGDEC(100)))
     val (itemid, desc) = (Col("itemid", VARCHAR(255)), Col("desc", VARCHAR(255))) 
     val (orderid, amt) = (Col("orderid", VARCHAR(255)), Col("amt", UINT)) 
 
@@ -71,6 +73,9 @@ object FKTest {
     System.exit(0)
   }
   def assertException[T <: Exception, S](e:Class[T])(f: => S) = 
-    try {f; assert(false) } catch { case a:Any => assert(a.getClass == e) }
+    try {f; assert(false) } catch { 
+      case a:Any => 
+        assert(a.getClass == e, s"Found ${a.getClass}. Expected: $e") 
+    }
 
 }

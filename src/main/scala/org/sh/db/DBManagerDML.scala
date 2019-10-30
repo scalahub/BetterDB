@@ -12,7 +12,7 @@ import java.sql.Statement
 import java.sql.{ResultSet => RS}
 import QueryProfiler._
 
-abstract class DBManagerDML(table:Table, dbConfig:TraitDBConfig) {
+private [db] abstract class DBManagerDML(table:Table, dbConfig:TraitDBConfig) {
   
   def usingOpt[A <: {def close(): Unit}, B](optA: Option[A], getA: => A)(f: A => B): B = {
     optA match {

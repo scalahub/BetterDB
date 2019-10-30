@@ -65,7 +65,7 @@ case class Aggregate(col:Col, aggr:Aggr) {
     case (INT | LONG | UINT(_) | ULONG(_) | BIGDEC(_, _)| UBIGDEC(_, _)| TIMESTAMP | CompositeCol(_,_,_), _) => true // should we allow aggregate for composite cols?
     case (_, Count) => true
     case (_, GroupBy) => true
-    case (UScalaBIGINT(_), Max | Min) => true
+    case (BIGDEC(_, _), Max | Min) => true
     case _ => false
   }
   def +(rhs:Any)    = Aggregate(col, CompositeAggr(this, Add, rhs)) // keeping col for now

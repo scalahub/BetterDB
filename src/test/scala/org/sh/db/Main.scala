@@ -357,9 +357,9 @@ object Main
   def foo = try {
     println("here0")
     
-    val (uid, email, value, scan) = (Col("uid", VARCHAR(255)), Col("email", VARCHAR(255)), Col("value", UScalaBIGINT(100)),
+    val (uid, email, value, scan) = (Col("uid", VARCHAR(255)), Col("email", VARCHAR(255)), Col("value", new UBIGDEC(100)),
                                      Col("scan", BLOB))
-    val table = Table("blobss", Array(uid, email, value, scan), Array(uid))
+    val table = Tab.withName("blobs").withCols(uid, email, value, scan).withPriKey(uid)
     val dbm = new DB(table)(MyDBConfig)
     dbm.deleteAll
     dbm.insertArray(Array("hi", "hello", BigInt(9223372036854775806L), Array[Byte](33, 43)))

@@ -59,7 +59,7 @@ case class ExistingDB(tableName:String)(implicit val dbConfig:TraitDBConfig = De
 }
 
 import Table._
-object DBManager {
+private [db] object DBManager {
   
   val noCols = Array[Col]()  
   
@@ -81,7 +81,7 @@ object DBManager {
    
 }
 /* Database functionality for making the following SQL queries: SELECT, DELETE, INSERT and UPDATE */
-class DBManager(val table:Table)(implicit val dbConfig:TraitDBConfig = DefaultDBConfigFromFile) 
+private [db] class DBManager(val table:Table)(implicit val dbConfig:TraitDBConfig = DefaultDBConfigFromFile)
 extends DBManagerDDL(table:Table, dbConfig:TraitDBConfig) with JsonFormatted {
   implicit val dbDML:DBManagerDML = this
   import table._

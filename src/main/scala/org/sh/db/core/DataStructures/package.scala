@@ -7,6 +7,7 @@ import org.sh.db._
 import org.sh.db.core.Util._
 
 package object DataStructures{
+  implicit def anyToAny(s: Any) = new BetterAny(s)
   class BetterAny(val a:Any) {
     def as[T] = a.asInstanceOf[T]
     // use above as 
@@ -21,7 +22,7 @@ package object DataStructures{
         //following does not seem to work
         // case a:Array[Byte] => "?" // for blob
       case a:Array[String] => if (a.isEmpty) throw DBException("cannot deconstruct an empty array")
-          "("+(a.map(_.anySQLString).reduceLeft(_+","+_))+")"
+          "("+(a.map(x => new BetterAny(x).anySQLString).reduceLeft(_+","+_))+")"
       case a:Array[Long] => if (a.isEmpty) throw DBException("cannot deconstruct an empty array")
           "("+(a.map(_.anySQLString).reduceLeft(_+","+_))+")"
       case a:Array[Int] => if (a.isEmpty) throw DBException("cannot deconstruct an empty array")
@@ -37,8 +38,7 @@ package object DataStructures{
     }    
     def const = constCol(a)
   }
-  implicit def anyToAny(s: Any) = new BetterAny(s)
-  
+
   abstract class Nested {
     val nestedSQLString:String
     val nestedData:Array[(Any, DataType)]
@@ -122,17 +122,17 @@ package object DataStructures{
   /**
    * Scala data type corresponding to a VARCHAR SQL data type
    */
-  @deprecated("use BIGDEC", "22 Oct 2016") 
-  case class ScalaBIGINT(size:Int) extends DataType { // size is number of decimal digits
-    def isSortable = false // certain types can be sorted (needed for places where we can compare columns), for instance in MergedOB
-    def toCastString:String = "VARCHAR" // used for a 'cast as' operation example cast age as INTEGER. This should output 'INTEGER'
-  }
-  @deprecated("use UBIGDEC", "22 Oct 2016") 
-  case class UScalaBIGINT(size:Int) extends DataType { // size is number of decimal digits // U implies unsigned (positive)
-    def isSortable = true // lexicographic ordering
-    def toCastString:String = "VARCHAR" // used for a 'cast as' operation example cast age as INTEGER. This should output 'INTEGER'
-  }
-  
+  //  @deprecated("use BIGDEC", "22 Oct 2016")
+  //  case class ScalaBIGINT(size:Int) extends DataType { // size is number of decimal digits
+  //    def isSortable = false // certain types can be sorted (needed for places where we can compare columns), for instance in MergedOB
+  //    def toCastString:String = "VARCHAR" // used for a 'cast as' operation example cast age as INTEGER. This should output 'INTEGER'
+  //  }
+  //  @deprecated("use UBIGDEC", "22 Oct 2016")
+  //  case class UScalaBIGINT(size:Int) extends DataType { // size is number of decimal digits // U implies unsigned (positive)
+  //    def isSortable = true // lexicographic ordering
+  //    def toCastString:String = "VARCHAR" // used for a 'cast as' operation example cast age as INTEGER. This should output 'INTEGER'
+  //  }
+  //
   case class VARCHAR(size:Int) extends DataType { 
     def isSortable = false 
     def toCastString:String = "VARCHAR" // used for a 'cast as' operation example cast age as INTEGER. This should output 'INTEGER'
@@ -195,10 +195,13 @@ package object DataStructures{
   object ULONG extends ULONG(Long.MaxValue)
   
   case class UBIGDEC (size:Int, precision:Int) extends DataType {
-    def isSortable = true 
+    def this(size:Int) = this(size, 0)
+    def isSortable = true
     def toCastString:String = "VARCHAR" // used for a 'cast as' operation example cast age as INTEGER. This should output 'INTEGER'
   }
-  case class BIGDEC(size:Int, precision:Int) extends DataType { 
+
+  case class BIGDEC(size:Int, precision:Int) extends DataType {
+    def this(size:Int) = this(size, 0)
     def isSortable = true 
     def toCastString:String = "VARCHAR" // used for a 'cast as' operation example cast age as INTEGER. This should output 'INTEGER'
   }
@@ -215,7 +218,7 @@ package object DataStructures{
   
   case class CONST(a:Any, dataType:DataType) extends DataType {
     dataType match {
-      case ScalaBIGINT(_)|LONG|INT|VARCHAR(_)|BOOL => 
+      case BIGDEC(_, _)|LONG|INT|VARCHAR(_)|BOOL =>
       case a => throw DBException(s"invalid data type for CONST col: "+a)
     }
     def isSortable = false
@@ -228,7 +231,7 @@ package object DataStructures{
       case s:Int => CONST(s, INT)
       case s:Long => CONST(s, LONG)
       case s:Boolean => CONST(s, BOOL)
-      case s:BigInt => CONST(s, ScalaBIGINT(100))
+      case s:BigInt => CONST(s, BIGDEC(100, 0))
       case s:BigDecimal => CONST(s, BIGDEC(s.scale, s.precision))
       case _ => throw DBException(s"I don't know how to convert data of type ${data.getClass} to a CONST Col")
     }, None)
