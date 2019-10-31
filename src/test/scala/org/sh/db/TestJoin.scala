@@ -44,9 +44,7 @@ object TestJoin extends App {
     case e:Throwable => 
       e.printStackTrace
       println(e.getMessage)
-  } finally { 
-    System.exit(1)
-  }
+  } 
 }
 
 
