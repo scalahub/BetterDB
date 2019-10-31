@@ -86,6 +86,8 @@ class DBMaintenance(dbu:DBMaintenanceUtil) { // objects will be accessed to load
           dbm.exportAllToCSV(fileName)
           dbm.tableName + " exported to "+fileName
         }
+      case DBGroup(index:Int, GroupedBy(host, dbms, db), dbMgrs:Array[DBManager]) =>
+        throw new DBException(s"Operation not supported for DBMS $dbms and host $host.")      
     }
   }
   def getTableIDsSortedRows = getDBMgrs.map(db => (db, db.numRows)).sortWith{(l, r) =>
