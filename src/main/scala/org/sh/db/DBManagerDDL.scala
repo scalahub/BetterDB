@@ -44,7 +44,8 @@ private [db] abstract class DBManagerDDL(table:Table, dbConfig:TraitDBConfig) ex
     if (table == link.pkTable && !link.pkCols.intersect(link.fkCols).isEmpty) // referring to same column in same table.. not allowed
       throw new DBException("Foreign Key: cols in table["+table+"]: cannot refer to itself.")
     if (!isFKLinkExists(link)) using(connection) { 
-      conn => using(conn.prepareStatement(createFkLinkString(link))){_.executeUpdate}
+      conn =>
+        using(conn.prepareStatement(createFkLinkString(link))){_.executeUpdate}
     } else 0
   }
   def removeForeignKey(link:Link) = {
