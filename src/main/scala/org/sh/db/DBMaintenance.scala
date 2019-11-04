@@ -75,10 +75,12 @@ class DBMaintenance(dbu:DBMaintenanceUtil) { // objects will be accessed to load
   import DBManager._
   // allow for changing password, migrating db etc
   def getTableIDs = getDBMgrs//.getDBMgrs
+
   def getTableIDsSorted = getDBMgrs.sortWith{(l, r) =>
     l.dbMgr.getTable.tableName < r.dbMgr.getTable.tableName
   }
-  def exportAllToCSV = {
+
+  def h2_exportAllToCSV = {
     getDBNameGroupsDetails.flatMap{
       case DBGroup(index:Int, GroupedBy("localhost", "h2", db), dbMgrs:Array[DBManager]) => 
         dbMgrs.map{dbm =>
@@ -90,18 +92,19 @@ class DBMaintenance(dbu:DBMaintenanceUtil) { // objects will be accessed to load
         throw new DBException(s"Operation not supported for DBMS $dbms and host $host.")      
     }
   }
+
   def getTableIDsSortedRows = getDBMgrs.map(db => (db, db.numRows)).sortWith{(l, r) =>
     l._2 > r._2
   }.map(_._1)
   
-  def autoBackup_get = {
+  def h2_autoBackup_get = {
     Array(
       "Auto Backup enabled: "+autoBackupEnabled,
       "Auto Backup directory: "+autoBackupDirectory,
       "Auto Backup time (millis): "+autoBackupMillis
     )
   }
-  def autoBackup_set(enabled:Boolean, backupDirectory:Option[String], backupTimeMillis:Option[String]) = {
+  def h2_autoBackup_set(enabled:Boolean, backupDirectory:Option[String], backupTimeMillis:Option[String]) = {
     val $backupDirectory$ = "None"
     val $enabled$ = "false"
     val $backupTimeMillis$ = "None"
@@ -112,7 +115,7 @@ class DBMaintenance(dbu:DBMaintenanceUtil) { // objects will be accessed to load
       if (millis < 300000) throw DBException(s"auto backup millis must be >= 300000 (5 mins)") // 1 min
       autoBackupMillis = millis
     }
-    autoBackup_get
+    h2_autoBackup_get
   }
   
   def archiveTable(tableID:String, timeColName:String, to:Long, masterPassword:String) = {

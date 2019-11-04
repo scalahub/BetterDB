@@ -13,7 +13,11 @@ object Col {
   def apply(colName:String, colType:DataType) = new Col(colName, colType, None)
   
   // following from http://www.h2database.com/html/advanced.html
-  val reservedNames = Array("CROSS", "CURRENT_DATE", "CURRENT_TIME", "CURRENT_TIMESTAMP", "DISTINCT", "EXCEPT", "EXISTS", "FALSE", "FETCH", "FOR", "FROM", "FULL", "GROUP", "HAVING", "INNER", "INTERSECT", "IS", "JOIN", "LIKE", "LIMIT", "MINUS", "NATURAL", "NOT", "NULL", "OFFSET", "ON", "ORDER", "PRIMARY", "ROWNUM", "SELECT", "SYSDATE", "SYSTIME", "SYSTIMESTAMP", "TODAY", "TRUE", "UNION", "UNIQUE", "WHERE")
+  val reservedNames = Array(
+    "CROSS", "CURRENT_DATE", "CURRENT_TIME", "CURRENT_TIMESTAMP", "DESC", "DISTINCT", "EXCEPT", "EXISTS",
+    "FALSE", "FETCH", "FOR", "FROM", "FULL", "GROUP", "HAVING", "INNER", "INTERSECT", "IS", "JOIN",
+    "LIKE", "LIMIT", "MINUS", "NATURAL", "NOT", "NULL", "OFFSET", "ON", "ORDER", "PRIMARY", "ROWNUM",
+    "SELECT", "SYSDATE", "SYSTIME", "SYSTIMESTAMP", "TODAY", "TRUE", "UNION", "UNIQUE", "WHERE")
 }
 case class Col(name:String, colType:DataType, optTable:Option[Table]) {
   if (Col.reservedNames.contains(name.toUpperCase)) throw DBException(s"column name '$name' is a reserved word")
