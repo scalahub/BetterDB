@@ -84,12 +84,12 @@ case class Where(col:Col, op:Op, data:Any) {
     )
   )
 
-  lazy val nestedWhereData = compositeWheres.flatMap{ // List.. ordering needs to be preserved because we need to set data
+  lazy val nestedWhereData: Array[(Any, DataType)] = compositeWheres.flatMap{ // List.. ordering needs to be preserved because we need to set data
     case Where(_, From, n:Nested) => n.nestedData
       // SELECT a from t1, (SELECT b from t2 where ...) AS t3 WHERE t1.c = t3.b
       // here the "(SELECT b from t2 where ...)" part is the above... 
       // the above gives data for the internal select query
-    case _ => Nil
+    case _ => Array[(Any, DataType)]()
   }
   lazy val nestedWhereTables:Array[String] = compositeWheres.flatMap{ // List.. ordering needs to be preserved because we need to set data
     case Where(col, op@From, n:Nested) => List(n.nestedSQLString + " AS "+n.alias(col.alias, op))

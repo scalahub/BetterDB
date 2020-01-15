@@ -54,9 +54,9 @@ case class Having(aggregate:Aggregate, op:Op, data:Any) {
     )
   )
 
-  lazy val nestedHavingData = compositeHavings.flatMap{ // List.. ordering needs to be preserved because we need to set data
+  lazy val nestedHavingData: Array[(Any, DataType)] = compositeHavings.flatMap{ // List.. ordering needs to be preserved because we need to set data
     case Having(_, From, n:Nested) => n.nestedData
-    case _ => Nil
+    case _ => Array[(Any, DataType)]()
   }
   lazy val nestedHavingTables:Array[String] = compositeHavings.flatMap{ // List.. ordering needs to be preserved because we need to set data
     case Having(aggregate, op@From, n:Nested) => List(n.nestedSQLString + " AS "+n.alias(aggregate.alias, op))
@@ -80,13 +80,3 @@ case class Having(aggregate:Aggregate, op:Op, data:Any) {
   }
   override def toString = s"HAVING $aggregate $op $data"
 }
-  
-///////////////////////////////////////////////////
-///////////////////////////////////////////////////
-///////////////////////////////////////////////////
-///////////////////////////////////////////////////
-///////////////////////////////////////////////////
-///////////////////////////////////////////////////
-///////////////////////////////////////////////////
-///////////////////////////////////////////////////
-///////////////////////////////////////////////////

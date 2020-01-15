@@ -9,7 +9,7 @@ import org.sh.db.core.DataStructures._
 import org.sh.db.core.Util._
 import org.sh.db.ScalaDB._
 import org.getopt.util.hash.MurmurHash
-import scala.collection.JavaConversions._
+import scala.jdk.CollectionConverters._
 
 
 case class GroupedBy(dbHost:String, dbms:String, dbname:String) extends JSONUtil.JsonFormatted {
@@ -65,8 +65,7 @@ class DBMaintenanceUtil(val objects:Seq[AnyRef]) extends TraitFilePropertyReader
     DBManager.loadedDBManagers.toArray.map{
       case (id, db)=> DBMgrData(id, db) 
     }
-  }  
-  
+  }
 }
 import QueryProfiler._
 class DBMaintenance(dbu:DBMaintenanceUtil) { // objects will be accessed to load the DBManagers in them. They just need to be accessed as in the next line

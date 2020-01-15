@@ -363,7 +363,7 @@ package object DataStructures{
     override def toString = "GROUP_BY" // setting to group by. Should not be used directly in query similarly to Top
   } 
   
-  private val composableAggrs = Array(Max, Min, Avg, Sum, Count) // can compose 
+  private val composableAggrs: Array[Aggr] = Array(Max, Min, Avg, Sum, Count) // can compose
   protected[db] val nativeAggrs = composableAggrs // can use in having clause, etc. Native support
   
   case class CompositeAggr(lhs:Aggregate, op:ColOperation, rhs:Any) extends Aggr{ // RHS can be Aggregate or number 
