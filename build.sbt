@@ -1,13 +1,10 @@
 name := "ScalaDB"
 
-version := "0.1"
+scalaVersion := "2.12.10"
 
-scalaVersion := "2.12.8"
+resolvers += "SonaType Snapshots s01" at "https://s01.oss.sonatype.org/content/repositories/snapshots/"
 
-lazy val ScalaUtils = RootProject(uri("https://github.com/scalahub/ScalaUtils.git"))
-//lazy val ScalaUtils = RootProject(uri("../ScalaUtils"))
-
-lazy val root = project in file(".") dependsOn ScalaUtils
+libraryDependencies += "io.github.scalahub" %% "scalautils" % "0.1.0-SNAPSHOT"
 
 libraryDependencies += "net.snaq" % "dbpool" % "7.0.1"
 
