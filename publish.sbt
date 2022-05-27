@@ -29,7 +29,9 @@ ThisBuild / pomIncludeRepository := { _ => false }
 
 ThisBuild / publishTo := {
   val nexus = "https://s01.oss.sonatype.org/"
-  Some("snapshots" at nexus + "content/repositories/snapshots")
+  if (isSnapshot.value)
+    Some("snapshots" at nexus + "content/repositories/snapshots")
+  else Some("releases" at nexus + "service/local/staging/deploy/maven2")
 }
 
 ThisBuild / publishMavenStyle := true
