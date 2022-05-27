@@ -4,8 +4,6 @@ ThisBuild / version := "1.0"
 
 scalaVersion := "2.12.10"
 
-resolvers += "SonaType" at "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
-
 libraryDependencies += "io.github.scalahub" %% "scalautils" % "1.0"
 
 libraryDependencies += "net.snaq" % "dbpool" % "7.0.1"
