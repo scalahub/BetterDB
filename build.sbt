@@ -1,8 +1,9 @@
 name := "ScalaDB"
 
+ThisBuild / version := "1.0"
+
 scalaVersion := "2.12.10"
 
-//resolvers += "SonaType Snapshots s01" at "https://s01.oss.sonatype.org/content/repositories/snapshots/"
 resolvers += "SonaType" at "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
 
 libraryDependencies += "io.github.scalahub" %% "scalautils" % "1.0"
